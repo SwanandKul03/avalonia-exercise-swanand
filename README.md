@@ -83,14 +83,14 @@ Bottom - Metrics
 - Enables fast scanning and situational awareness  
 
 
-State-Driven UI**
+State-Driven UI
 - Entire interface is controlled by a single source: signal state  
 - All UI elements react through bindings and converters  
 
 - Ensures consistency and predictable behavior  
 
 
-Minimal Cognitive Load**
+Minimal Cognitive Load
 - Uses short, familiar labels (`PROCEED`, `CAUTION`, `STOP`)  
 - Visual cues reduce need for reading  
 
