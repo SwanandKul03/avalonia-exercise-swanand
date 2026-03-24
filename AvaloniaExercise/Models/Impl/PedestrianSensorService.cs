@@ -4,16 +4,21 @@ using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using NameGenerator.Generators;
 
 namespace AvaloniaExercise.Models.Impl;
-
-// We don't expect you to edit this file. Unless you really want/need to!
 
 public class PedestrianSensorService : IPedestrianSensorService, IAsyncDisposable
 {
     private const int ArrivalIntervalMsMin = 500;
     private const int ArrivalIntervalMsMax = 3000;
+    private const int HumanArrivalWeight = 3;
+    private const int AnimalArrivalWeight = 1;
+
+    private static readonly IReadOnlyList<PedestrianSpecies> AnimalSpecies =
+    [
+        PedestrianSpecies.Dog,
+        PedestrianSpecies.Cat
+    ];
 
     private static readonly IReadOnlyList<Color> ColorPalette =
     [
@@ -23,9 +28,11 @@ public class PedestrianSensorService : IPedestrianSensorService, IAsyncDisposabl
         Color.White, Color.LightGray, Color.DimGray, Color.SaddleBrown, Color.Tan
     ];
 
-    private readonly RealNameGenerator _realNameGenerator;
     private readonly Lock _lock;
     private readonly List<Pedestrian> _pedestrians;
+    private int _pedestrianCounter;
+    private int _dogCounter;
+    private int _catCounter;
 
     private readonly CancellationTokenSource _cancellationTokenSource;
     private readonly Task _randomPedestrianArrivalTask;
@@ -33,7 +40,6 @@ public class PedestrianSensorService : IPedestrianSensorService, IAsyncDisposabl
 
     public PedestrianSensorService()
     {
-        _realNameGenerator = new RealNameGenerator { SpaceCharacter = " " };
         _lock = new Lock();
 
         lock (_lock)
@@ -95,17 +101,36 @@ public class PedestrianSensorService : IPedestrianSensorService, IAsyncDisposabl
         }
     }
 
-
     private Pedestrian CreateRandomPedestrian()
     {
+        var species = CreateWeightedSpecies();
+
         return new Pedestrian
         {
-            Name = _realNameGenerator.Generate(),
-            Species = (PedestrianSpecies)Random.Shared.Next(Enum.GetValues<PedestrianSpecies>().Length),
+            Name = CreateDisplayName(species),
+            Species = species,
             ShirtColor = ColorPalette[Random.Shared.Next(ColorPalette.Count)],
             ShortsColor = ColorPalette[Random.Shared.Next(ColorPalette.Count)],
             ArrivedAtUtc = DateTime.UtcNow
         };
+    }
+
+    private string CreateDisplayName(PedestrianSpecies species)
+        => species switch
+        {
+            PedestrianSpecies.Human => $"Pedestrian {++_pedestrianCounter}",
+            PedestrianSpecies.Dog => $"Dog {++_dogCounter}",
+            PedestrianSpecies.Cat => $"Cat {++_catCounter}",
+            _ => species.ToDisplayName()
+        };
+
+    private static PedestrianSpecies CreateWeightedSpecies()
+    {
+        int roll = Random.Shared.Next(HumanArrivalWeight + AnimalArrivalWeight);
+        if (roll < HumanArrivalWeight)
+            return PedestrianSpecies.Human;
+
+        return AnimalSpecies[Random.Shared.Next(AnimalSpecies.Count)];
     }
 
     private void RemoveCrossedPedestrians()
@@ -157,7 +182,9 @@ public class PedestrianSensorService : IPedestrianSensorService, IAsyncDisposabl
                 });
             }
         }
-        catch (OperationCanceledException) { }
+        catch (OperationCanceledException)
+        {
+        }
     }
 }
 
