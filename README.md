@@ -1,44 +1,162 @@
-# Seismiq Avalonia Exercise
+# Real-Time Pedestrian Control System
 
-## Instructions
+![Platform](https://img.shields.io/badge/platform-.NET%208-blue)
+![UI](https://img.shields.io/badge/UI-Avalonia-0f172a)
+![Pattern](https://img.shields.io/badge/architecture-MVVM-15803d)
+![Status](https://img.shields.io/badge/status-ready%20for%20GitHub-success)
 
-We'd like to see how you'd design a basic UI application using Avalonia. This exercise is designed to take around an hour. Please fork this repo and then send us a message with a link to your fork when ready to submit.
+A desktop dashboard simulator for monitoring and controlling a pedestrian crossing system.
 
-We've provided a template application with model interfaces and implementations, we would like you to write the view models and views for the application.
+This project recreates a live roadside control panel with a timed signal cycle, pedestrian queue simulation, crossing-state transitions, operator controls, and a visually structured traffic scene. It is built with Avalonia UI on .NET 8 and follows an MVVM architecture.
 
-The exact design of the UI is entirely up to you, feel free to be as creative as you wish. A good design should display the provided data in a graphically interesting way without sacrificing usability or functionality. We would like to see use of colour, icons, animations and motion (where appropriate!), etc. 
+## Why This Project
 
-Use of AI coding tools is permitted, however you should be prepared to explain your design choices and code to us.
+The goal of this project is to demonstrate how a pedestrian control system can be represented as a modern desktop dashboard.
 
-Don't be too concerned about squashing every single possible bug or possible visual glitch, this exercise will primarily be assessed on the design choices you make rather than the exact implementation.
+It combines:
 
-You are free to use any external dependencies you wish providing they are available as from Nuget.
+- real-time state simulation
+- dashboard-style monitoring
+- traffic signal logic
+- pedestrian queue behavior
+- a polished control-room-inspired interface
 
-If anything is unclear or you have any questions or problems please ask us! The purpose of this exercise is for you to show off your design so we'd rather help you out with any technical problems than you submit something that doesn't demonstrate the best of your skills.
+## Key Features
 
-## Goals
+- Real-time traffic signal workflow with idle, requested, active, and cooldown phases
+- Pedestrian spawning and queue management
+- Live countdown display inside the signal lights
+- Peak-hour simulation and live clock
+- Center crossing-zone visualization with sidewalks, vehicles, zebra crossing, and signals
+- Pedestrian tracking list with live status updates
+- Reusable styling and converter-driven UI behavior
+- Clean MVVM separation between logic and presentation
 
-The application is a monitoring app for a pedestrian crossing with traffic lights. The model will give you randomized generated data in real-time on pedestrians waiting to cross a road. Your application should display real-time information on all the pedestrians, the current status of the traffic lights, and also provide controls for the user to trigger the lights to allow them to cross the road.
+## Demo Flow
 
-## Models
+The application models a simple crossing lifecycle:
 
-All provided model interfaces and classes are within the 'Models' namespace. The 'Impl' namespace contains the actual implementations of the models which you can reference but should not code against.
+1. Vehicles move during the idle phase.
+2. The operator triggers a crossing request.
+3. The signal transitions into caution.
+4. The crossing becomes active and pedestrians are allowed to move.
+5. The system enters cooldown and returns to normal traffic flow.
 
-## ViewModels
+## Tech Stack
 
-The template includes the CommunityToolkit.Mvvm library as a nuget dependency. (https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/). You 
-should use base classes from this library as the base for your ViewModels.
+- .NET 8
+- Avalonia 11
+- CommunityToolkit.Mvvm
+- Font Awesome icons via Projektanker.Icons.Avalonia.FontAwesome
 
-## Threading
+## Architecture
 
-The provided model implementations are designed to be thread safe, however you should take into account that the events they produce may occur on threads other than the UI thread. See https://docs.avaloniaui.net/docs/app-development/threading for information on how to schedule execution on the UI thread in Avalonia.
+### Startup Layer
 
-## Styles
+- [Real-Time Pedestrian Control System/Program.cs](Real-Time%20Pedestrian%20Control%20System/Program.cs)
+    Initializes Avalonia and registers the Font Awesome icon provider.
+- [Real-Time Pedestrian Control System/App.axaml](Real-Time%20Pedestrian%20Control%20System/App.axaml)
+    Loads the Fluent theme and shared custom styles.
+- [Real-Time Pedestrian Control System/App.axaml.cs](Real-Time%20Pedestrian%20Control%20System/App.axaml.cs)
+    Creates the main window and assigns the view model.
 
-The template includes the Avalonia FluentTheme already configured, however feel free to change this to any other theme if you wish, or customize the control styles.
+### Domain Layer
 
-## Icons
+- [Real-Time Pedestrian Control System/Models/CrossingState.cs](Real-Time%20Pedestrian%20Control%20System/Models/CrossingState.cs)
+    Defines the signal-state lifecycle.
+- [Real-Time Pedestrian Control System/Models/Pedestrian.cs](Real-Time%20Pedestrian%20Control%20System/Models/Pedestrian.cs)
+    Stores pedestrian attributes such as ID, side, wait time, and status.
 
-The template includes the FontAwesome 6 Free icons library. You can use this via an included nuget dependency which provides custom Avalonia controls, for usage instructions see https://github.com/Projektanker/Icons.Avalonia.
+### Logic Layer
 
-You can use any of the icons listed here https://fontawesome.com/v6/search?ip=classic&ic=free-collection.
+- [Real-Time Pedestrian Control System/ViewModels/MainViewModel.cs](Real-Time%20Pedestrian%20Control%20System/ViewModels/MainViewModel.cs)
+    Controls timers, countdowns, pedestrian spawning, queue calculations, state transitions, and the trigger command.
+
+### Presentation Layer
+
+- [Real-Time Pedestrian Control System/Views/MainWindow.axaml](Real-Time%20Pedestrian%20Control%20System/Views/MainWindow.axaml)
+    Defines the complete dashboard UI.
+- [Real-Time Pedestrian Control System/Views/MainWindow.axaml.cs](Real-Time%20Pedestrian%20Control%20System/Views/MainWindow.axaml.cs)
+    Minimal code-behind for the main window shell.
+
+### Visual Translation Layer
+
+- [Real-Time Pedestrian Control System/Converters/Converters.cs](Real-Time%20Pedestrian%20Control%20System/Converters/Converters.cs)
+    Converts system state into labels, colors, visibility rules, and signal behavior.
+- [Real-Time Pedestrian Control System/Styles/Theme.axaml](Real-Time%20Pedestrian%20Control%20System/Styles/Theme.axaml)
+    Centralizes typography, panel surfaces, metric styling, and reusable UI primitives.
+
+## UI Design Factors
+
+The final interface is shaped by a few consistent design principles:
+
+- Dark control-room palette for a dashboard feel
+- Green, amber, and red as semantic traffic colors
+- Large metrics for operational readability
+- Center-weighted crossing scene to mimic a real roadway overview
+- Minimal but expressive iconography instead of emoji-based symbols
+- Reusable glass-card surfaces for consistent panel styling
+- Converter-driven state styling so visuals stay synchronized with logic
+
+## Project Structure
+
+```text
+Real-Time Pedestrian Monitoring/
+├── README.md
+├── .gitignore
+└── Real-Time Pedestrian Control System/
+        ├── Real-Time Pedestrian Control System.sln
+        ├── Real-Time Pedestrian Control System.csproj
+        ├── Program.cs
+        ├── App.axaml
+        ├── App.axaml.cs
+        ├── Models/
+        ├── ViewModels/
+        ├── Views/
+        ├── Converters/
+        └── Styles/
+```
+
+## Build
+
+Run from the workspace root:
+
+```bash
+dotnet build "Real-Time Pedestrian Control System/Real-Time Pedestrian Control System.sln"
+```
+
+## Run
+
+Run from the workspace root:
+
+```bash
+dotnet run --project "Real-Time Pedestrian Control System/Real-Time Pedestrian Control System.csproj"
+```
+
+## Screenshots
+
+Add screenshots here after publishing.
+
+Recommended sections:
+
+- Main dashboard overview
+- Active crossing phase
+- Requested or caution phase
+
+## Repository Notes
+
+- Generated build output is ignored through [/.gitignore](.gitignore)
+- The application is currently a local simulation and does not connect to external hardware or live traffic sensors
+- The root folder structure is intentionally kept clean so the local project tree matches the published GitHub structure
+
+## Future Improvements
+
+- Hardware or sensor integration
+- Event logging and persistence
+- Historical analytics charts
+- Configuration for signal timing parameters
+- Automated test coverage for the state machine and converters
+
+## License
+
+Add your preferred license before making the repository public for reuse.
