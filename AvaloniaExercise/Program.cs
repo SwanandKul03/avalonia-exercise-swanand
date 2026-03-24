@@ -1,4 +1,4 @@
-﻿using Avalonia;
+using Avalonia;
 using System;
 using Projektanker.Icons.Avalonia;
 using Projektanker.Icons.Avalonia.FontAwesome;
@@ -13,8 +13,7 @@ public sealed class Program
 
     public static AppBuilder BuildAvaloniaApp()
     {
-        IconProvider.Current
-            .Register<FontAwesomeIconProvider>();
+        IconProvider.Current.Register<FontAwesomeIconProvider>();
 
         return AppBuilder.Configure<App>()
             .UsePlatformDetect()
