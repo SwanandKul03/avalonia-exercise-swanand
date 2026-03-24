@@ -3,11 +3,15 @@ using System.Threading.Tasks;
 
 namespace AvaloniaExercise.Models.Impl;
 
-// We don't expect you to edit this file. Unless you really want/need to!
-
 public class TrafficLightService : ITrafficLightService
 {
-    private const int CrossingTimeMs = 5000;
+    public const int RequestedAmberTimeSeconds = 5;
+    public const int RedCrossingTimeSeconds = 15;
+    public const int CooldownAmberTimeSeconds = 5;
+
+    private const int RequestedAmberTimeMs = RequestedAmberTimeSeconds * 1000;
+    private const int RedCrossingTimeMs = RedCrossingTimeSeconds * 1000;
+    private const int CooldownAmberTimeMs = CooldownAmberTimeSeconds * 1000;
 
     private readonly PedestrianSensorService _pedestrianSensorService;
 
@@ -22,13 +26,11 @@ public class TrafficLightService : ITrafficLightService
 
     public DateTime? CrossingTimeExpiryUtc { get; private set; }
 
-
     public event EventHandler<TrafficLightStatus>? StatusChanged;
 
     public event EventHandler<bool>? IsCrossingRequestedChanged;
 
     public event EventHandler<DateTime?>? CrossingTimeExpiryUtcChanged;
-
 
     public async Task RequestCrossingAsync()
     {
@@ -37,23 +39,21 @@ public class TrafficLightService : ITrafficLightService
 
         UpdateIsCrossingRequested(true);
 
-        await Task.Delay(Random.Shared.Next(1000, 5000)).ConfigureAwait(false);
-
         UpdateStatus(TrafficLightStatus.Amber);
-        await Task.Delay(2000).ConfigureAwait(false);
+        await Task.Delay(RequestedAmberTimeMs).ConfigureAwait(false);
         UpdateStatus(TrafficLightStatus.Red);
         UpdateIsCrossingRequested(false);
 
         _pedestrianSensorService.SetAllWaitingPedestriansCrossing();
 
-        UpdateCrossingTimeExpiryUtc(DateTime.UtcNow + TimeSpan.FromMilliseconds(CrossingTimeMs));
-        await Task.Delay(CrossingTimeMs).ConfigureAwait(false);
+        UpdateCrossingTimeExpiryUtc(DateTime.UtcNow + TimeSpan.FromMilliseconds(RedCrossingTimeMs));
+        await Task.Delay(RedCrossingTimeMs).ConfigureAwait(false);
         UpdateCrossingTimeExpiryUtc(null);
 
         _pedestrianSensorService.SetAllCrossingPedestriansCrossed();
 
         UpdateStatus(TrafficLightStatus.Amber);
-        await Task.Delay(1000).ConfigureAwait(false);
+        await Task.Delay(CooldownAmberTimeMs).ConfigureAwait(false);
         UpdateStatus(TrafficLightStatus.Green);
     }
 
