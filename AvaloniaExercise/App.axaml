@@ -1,15 +1,13 @@
-<Application
-    x:Class="AvaloniaExercise.App"
-    xmlns="https://github.com/avaloniaui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:AvaloniaExercise"
-    RequestedThemeVariant="Default">
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:AvaloniaExercise"
+             x:Class="AvaloniaExercise.App"
+             RequestedThemeVariant="Default">
+  <Application.DataTemplates>
+    <local:ViewLocator />
+  </Application.DataTemplates>
 
-    <Application.DataTemplates>
-        <local:ViewLocator />
-    </Application.DataTemplates>
-
-    <Application.Styles>
-        <FluentTheme />
-    </Application.Styles>
+  <Application.Styles>
+    <FluentTheme />
+  </Application.Styles>
 </Application>
