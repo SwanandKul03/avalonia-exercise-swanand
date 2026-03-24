@@ -5,14 +5,8 @@ namespace AvaloniaExercise.Models;
 
 public interface IPedestrianSensorService
 {
-    /// <summary>
-    /// The collection of <see cref="Pedestrian"/>s currently on the street.
-    /// </summary>
     IEnumerable<Pedestrian> Pedestrians { get; }
 
-    /// <summary>
-    /// Raise when a <see cref="Pedestrian"/> is added or removed from the <see cref="Pedestrians"/> collection.
-    /// </summary>
     event EventHandler<PedestriansChangedEventArgs>? PedestriansChanged;
 }
 
