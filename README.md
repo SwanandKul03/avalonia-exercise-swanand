@@ -1,12 +1,14 @@
-Real-Time Pedestrian Control System
+# Real-Time Pedestrian Control System
 
 A real-time desktop dashboard built with Avalonia that simulates and monitors a smart pedestrian crossing system.
 
 The application presents traffic signal states, pedestrian flow, crossing activity, and operator controls within a single, responsive interface designed for clarity and quick decision-making.
 
-Objective
 
-To design a monitoring interface that
+
+## Objective
+
+To design a monitoring interface that:
 
 - Clearly communicates real-time system state  
 - Reflects real-world traffic behavior  
@@ -14,7 +16,8 @@ To design a monitoring interface that
 - Balances visual richness with usability  
 
 
-Project Overview
+
+## Project Overview
 
 This project extends the provided exercise scaffold into a structured control dashboard.
 
@@ -23,7 +26,8 @@ It simulates a live crossing environment where pedestrians are generated dynamic
 The interface is designed to resemble a compact control panel used for monitoring and managing pedestrian crossings.
 
 
-Core Features
+
+## Core Features
 
 - Real-time traffic signal lifecycle (Green → Amber → Red → Cooldown)  
 - Countdown timers integrated into signal states  
@@ -36,7 +40,8 @@ Core Features
 - Reactive UI powered by MVVM bindings  
 
 
-Simulation Flow
+
+## Simulation Flow
 
 The system follows a structured crossing cycle:
 
@@ -48,72 +53,78 @@ The system follows a structured crossing cycle:
 6. System enters cooldown phase  
 7. Returns to normal traffic flow  
 
-Signal Timings
+### Signal Timings
 
 - Request phase (Amber): 5s  
 - Active crossing (Red): 15s  
 - Cooldown phase (Amber): 5s  
 
 
-Design Decisions
 
-Real-World Alignment
+## Design Decisions
+
+### **Real-World Alignment**
 The UI mirrors a physical crossing system:
 - Vertical signal lights  
 - Zebra crossing layout  
 - Vehicle and pedestrian separation  
 
-- Reduces learning curve and improves immediate understanding  
+→ Reduces learning curve and improves immediate understanding  
 
 
-Semantic Color System
-Green - Proceed  
-Amber - Caution / Transition  
-Red - Stop  
+### **Semantic Color System**
+- Green → Proceed  
+- Amber → Caution / Transition  
+- Red → Stop  
 
-Colors directly represent system state, not decoration  
-
-
-Clear Information Hierarchy**
-Left - Signal + Control  
-Center - Crossing visualization  
-Right - Entity list  
-Bottom - Metrics  
-
-- Enables fast scanning and situational awareness  
+→ Colors directly represent system state, not decoration  
 
 
-State-Driven UI
+
+### **Clear Information Hierarchy**
+- Left → Signal + Control  
+- Center → Crossing visualization  
+- Right → Entity list  
+- Bottom → Metrics  
+
+→ Enables fast scanning and situational awareness  
+
+
+
+### **State-Driven UI**
 - Entire interface is controlled by a single source: signal state  
 - All UI elements react through bindings and converters  
 
-- Ensures consistency and predictable behavior  
+→ Ensures consistency and predictable behavior  
 
 
-Minimal Cognitive Load
+
+### **Minimal Cognitive Load**
 - Uses short, familiar labels (`PROCEED`, `CAUTION`, `STOP`)  
 - Visual cues reduce need for reading  
 
-Improves usability in time-sensitive scenarios  
+→ Improves usability in time-sensitive scenarios  
 
 
-Purposeful Motion**
+
+### **Purposeful Motion**
 - Active signals pulse subtly  
 - Countdown is embedded in signal lights  
 
-- Motion highlights critical changes without distraction  
+→ Motion highlights critical changes without distraction  
 
-Architecture
+
+## Architecture
 
 - MVVM (Model-View-ViewModel)  
 - Observable properties for real-time updates  
 - Timer-driven simulation logic  
 - Converter-based UI state translation  
 
- Tech Stack
+
+## Tech Stack
 
 - .NET 10  
 - Avalonia UI 11  
 - CommunityToolkit.Mvvm  
 - Font Awesome Icons  
-
