@@ -5,7 +5,6 @@ A real-time desktop dashboard built with Avalonia that simulates and monitors a 
 The application presents traffic signal states, pedestrian flow, crossing activity, and operator controls within a single, responsive interface designed for clarity and quick decision-making.
 
 
-
 ## Objective
 
 To design a monitoring interface that:
@@ -16,7 +15,6 @@ To design a monitoring interface that:
 - Balances visual richness with usability  
 
 
-
 ## Project Overview
 
 This project extends the provided exercise scaffold into a structured control dashboard.
@@ -24,7 +22,6 @@ This project extends the provided exercise scaffold into a structured control da
 It simulates a live crossing environment where pedestrians are generated dynamically, signals transition through timed phases, and the UI continuously reflects system changes using MVVM-driven updates.
 
 The interface is designed to resemble a compact control panel used for monitoring and managing pedestrian crossings.
-
 
 
 ## Core Features
@@ -40,7 +37,6 @@ The interface is designed to resemble a compact control panel used for monitorin
 - Reactive UI powered by MVVM bindings  
 
 
-
 ## Simulation Flow
 
 The system follows a structured crossing cycle:
@@ -53,12 +49,12 @@ The system follows a structured crossing cycle:
 6. System enters cooldown phase  
 7. Returns to normal traffic flow  
 
+
 ### Signal Timings
 
 - Request phase (Amber): 5s  
 - Active crossing (Red): 15s  
 - Cooldown phase (Amber): 5s  
-
 
 
 ## Design Decisions
@@ -80,7 +76,6 @@ The UI mirrors a physical crossing system:
 → Colors directly represent system state, not decoration  
 
 
-
 ### **Clear Information Hierarchy**
 - Left → Signal + Control  
 - Center → Crossing visualization  
@@ -90,7 +85,6 @@ The UI mirrors a physical crossing system:
 → Enables fast scanning and situational awareness  
 
 
-
 ### **State-Driven UI**
 - Entire interface is controlled by a single source: signal state  
 - All UI elements react through bindings and converters  
@@ -98,13 +92,11 @@ The UI mirrors a physical crossing system:
 → Ensures consistency and predictable behavior  
 
 
-
 ### **Minimal Cognitive Load**
 - Uses short, familiar labels (`PROCEED`, `CAUTION`, `STOP`)  
 - Visual cues reduce need for reading  
 
 → Improves usability in time-sensitive scenarios  
-
 
 
 ### **Purposeful Motion**
@@ -127,4 +119,18 @@ The UI mirrors a physical crossing system:
 - .NET 10  
 - Avalonia UI 11  
 - CommunityToolkit.Mvvm  
-- Font Awesome Icons  
+- Font Awesome Icons
+
+
+## Design & Development Methodology
+
+The dashboard was developed through an iterative, user-centered process.
+
+- **Paper Prototyping**  
+  Initial layouts and interaction flows were explored using low-fidelity sketches to quickly define information hierarchy and system structure.
+
+- **Figma Design Prototype**  
+  A high-fidelity prototype was created using a component-driven design system. Reusable components, variants, and shared styles ensured scalability, consistency, and a clear visual hierarchy. Semantic traffic colors (red, amber, green) were used to align with real-world expectations.
+
+- **Development (Avalonia + MVVM)**  
+  The validated design was implemented using Avalonia with MVVM architecture, ensuring separation of concerns between UI, logic, and data. State-driven updates, bindings, and reusable components were used to maintain consistency between design and implementation.
