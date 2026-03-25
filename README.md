@@ -116,6 +116,8 @@ The UI mirrors a physical crossing system:
 
 ## Tech Stack
 
+- Figma
+- Remixicon
 - .NET 10  
 - Avalonia UI 11  
 - CommunityToolkit.Mvvm  
