@@ -554,8 +554,6 @@
                   </ItemsControl>
                 </Grid>
               </Border>
-              <!-- Left border line -->
-              <Rectangle Grid.Column="0" Width="5" Fill="#D6DBE2" HorizontalAlignment="Right" Opacity="0.32" />
 
               <!-- ROAD -->
               <Grid Grid.Column="1">
@@ -675,8 +673,6 @@
                 </Border>
               </Grid>
 
-              <!-- Right border line -->
-              <Rectangle Grid.Column="2" Width="5" Fill="#D6DBE2" HorizontalAlignment="Left" Opacity="0.32" />
 
               <!-- RIGHT SIDEWALK -->
               <Border Grid.Column="2" Background="#262F3B">
